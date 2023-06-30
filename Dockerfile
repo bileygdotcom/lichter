@@ -5,7 +5,7 @@ ARG TAG="20.04"
 FROM ${BASE_IMAGE}:${TAG}
 
 LABEL project="Lichter"\
-      version="0.1.0" \
+      version="0.1.1" \
       mantainer="bileyg"\
       company="Ascon"
 
@@ -19,31 +19,31 @@ RUN apt-get update \
        gnupg \
        gpg-agent \
        locales \
-       wget \
+       #wget \
        #winbind \
        #x11-xserver-utils \
        #xvfb \
-       zenity \
+       #zenity \
     && rm -rf /var/lib/apt/lists/*
     
 # add wine repository & winetricks     
 COPY keys /usr/share/keyrings/
 COPY source /etc/apt/sources.list.d/
-COPY winetricks /usr/bin/
+#COPY winetricks /usr/bin/
 
 # Add i386 architecture && winetricks execution
 RUN dpkg --add-architecture i386 \
     && APT_KEY_DONT_WARN_ON_DANGEROUS_USAGE=1 \
     && DEBIAN_FRONTEND="noninteractive" \
-    && chmod +x /usr/bin/winetricks
+    #&& chmod +x /usr/bin/winetricks
     
 # Install wine
 RUN apt-get update \
-    && apt-get install -y --install-recommends winehq-staging \
+    && apt-get install -y --no-install-recommends winehq-staging \
     && rm -rf /var/lib/apt/lists/*
 
 # Add dotnet
-RUN winetricks --force -q dotnet472
+#RUN winetricks --force -q dotnet472
 
 # Add Special Ingredients with Winetricks
 #RUN winetricks -q d3dcompiler_47 && winetricks -q corefonts
