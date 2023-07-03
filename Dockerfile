@@ -48,7 +48,7 @@ RUN dpkg --add-architecture i386 \
     
 # Install wine
 RUN apt-get update \
-    && apt-get install -y --install-recommends winehq-staging \
+    && apt-get install -y --install-recommends winehq-stable \
     && rm -rf /var/lib/apt/lists/*
 
 # Install wine old
@@ -84,7 +84,7 @@ ENV LANG en_US.UTF-8
 # install mono
 COPY mono /root/.wine/drive_c/mono/
 # Install mono
-RUN wine msiexec /i /root/.wine/drive_c/mono/wine-mono-X.Y.Z-x86.msi
+RUN wine msiexec /i /root/.wine/drive_c/mono/wine-mono-8.0.0-x86.msi
 
 #COPY pulse-client.conf /root/pulse/client.conf
 #COPY entrypoint.sh /usr/bin/entrypoint
